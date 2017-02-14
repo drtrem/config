@@ -4,3 +4,10 @@ tar -xvzf archive.tar.gz
 /var/lib/dhcp/dhcpd.leases
 /var/lib/samba/wins.dat
 
+echo "# config" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/drtrem/config.git
+git push -u origin master
+
