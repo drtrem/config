@@ -1,0 +1,128 @@
+# Меню, которое закачали
+default menu.c32
+ 
+# Заголовок и время на выбор пункта меню
+menu title PXE Network Boot Menu
+prompt 0
+timeout 1200
+ 
+# Первый пункт меню – загрузка с HD
+label Boot from first hard disk
+localboot 0x80
+ 
+############### OS DEBIAN 7 ########
+# Меню с подменю
+menu begin
+menu title Debian 7
+ 
+# Переход в родительскую директорию (возврат к предыдущему меню)
+label ..
+menu exit
+ 
+# Список операционных систем для установки по PXE
+LABEL debian_7_i386_install
+kernel debian/etch/i386/linux
+append vga=normal initrd=debian/etch/i386/initrd.gz
+
+LABEL debian_7_i386_auto_test
+kernel debian/etch/i386/linux
+append vga=normal initrd=debian/etch/i386/initrd.gz locale=ru_Ru keyboard-configuration/modelcode=SKIP automatic-ubiquity url=http://172.31.1.77/preseed7_debian.cfg
+ 
+LABEL debian_7_i386_install_expert
+kernel debian/etch/i386/linux
+append priority=low vga=normal initrd=debian/etch/i386/initrd.gz  --
+ 
+LABEL debian_7_i386_rescue
+kernel debian/etch/i386/linux
+append vga=normal initrd=debian/etch/i386/initrd.gz  rescue/enable=true --
+ 
+menu end
+##################################
+
+############### OS MINT MATE 18.1 ##########
+menu begin
+menu title MINT MATE 18.1
+ 
+label ..
+menu exit
+ 
+LABEL MINT_MATE_18.1_i386
+kernel mint18.1/casper/vmlinuz
+#append preseed/url=http://172.31.1.77/mint_seperatehome.cfg boot=casper initrd=mint18.1/casper/initrd.lz netboot=nfs nfsroot=172.31.1.77:/tftpboot/mint18.1 --
+#append vga=normal boot=casper netboot=nfs nfsroot=172.31.1.77:/tftpboot/mint18.1 initrd=images/lmint/initrd.lz --
+#append vga=normal initrd=/images/lmint/initrd.lz --
+#preseed/url=tftp://192.168.11.66/preseed.cfg
+#append boot=casper initrd=mint18.1/casper/initrd.lz netboot=nfs nfsroot=172.31.1.77:/tftpboot/mint18.1 --
+append boot=casper initrd=mint18.1/casper/initrd.lz netboot=nfs nfsroot=172.31.1.77:/tftpboot/mint18.1 locale=ru_Ru keyboard-configuration/modelcode=SKIP automatic-ubiquity url=http://172.31.1.77/preseed7.cfg
+ 
+LABEL MINT_MATE_18.1_x64
+kernel mint18.1_64/casper/vmlinuz
+append boot=casper initrd=mint18.1_64/casper/initrd.lz netboot=nfs nfsroot=172.31.1.77:/tftpboot/mint18.1_64 locale=ru_Ru keyboard-configuration/modelcode=SKIP automatic-ubiquity url=http://172.31.1.77/preseed7.cfg
+
+LABEL MINT_MATE_18.1_x64_clear
+kernel mint18.1_64/casper/vmlinuz
+append boot=casper initrd=mint18.1_64/casper/initrd.lz netboot=nfs nfsroot=172.31.1.77:/tftpboot/mint18.1_64 locale=ru_Ru keyboard-configuration/modelcode=SKIP -- 
+menu end
+##################################
+ 
+############### OS UBUNTU 16.04 ##########
+menu begin
+menu title UBUNTU 16.04
+ 
+label ..
+menu exit
+ 
+LABEL Ubuntu_16_04_i386
+kernel centos5/i386/linux
+append vga=normal initrd=centos5/i386/initrd.gz
+ 
+LABEL Ubuntu_16_04_x64
+kernel centos5/x64/linux
+append vga=normal initrd=centos5/x64/initrd.gz
+ 
+menu end
+##################################
+
+############### kubuntu xubuntu ##########
+menu begin
+menu title kubuntu xubuntu
+ 
+label ..
+menu exit
+ 
+LABEL kubuntu-16.04.1-desktop-amd64
+kernel kubuntu-16.04.1-desktop-amd64/casper/vmlinuz.efi
+append boot=casper initrd=kubuntu-16.04.1-desktop-amd64/casper/initrd.lz netboot=nfs nfsroot=172.31.1.77:/tftpboot/kubuntu-16.04.1-desktop-amd64 --
+ 
+LABEL xubuntu-16.04.1-desktop-amd64
+kernel xubuntu-16.04.1-desktop-amd64/casper/vmlinuz.efi
+append boot=casper initrd=xubuntu-16.04.1-desktop-amd64/casper/initrd.lz netboot=nfs nfsroot=172.31.1.77:/tftpboot/xubuntu-16.04.1-desktop-amd64 locale=ru_Ru keyboard-configuration/modelcode=SKIP automatic-ubiquity url=http://172.31.1.77/preseed7.cfg
+ 
+menu end
+##################################
+
+############### Utility ########
+# Меню с подменю
+menu begin
+menu title Utility
+ 
+# Переход в родительскую директорию (возврат к предыдущему меню)
+label ..
+menu exit
+ 
+# Список операционных систем для установки по PXE
+LABEL Memtest
+kernel /memtest/memtest86+
+
+label MHDD
+kernel memdisk
+initrd /mhdd/mhdd32ver4.6.iso
+APPEND iso raw 
+
+label WinPE
+kernel memdisk
+initrd /winpe/Win7PESE.iso
+APPEND iso raw
+
+menu end
+##################################

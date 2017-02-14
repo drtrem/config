@@ -1,0 +1,6 @@
+tar -pczf mate.tar.gz mate
+tar -xvzf archive.tar.gz
+
+/var/lib/dhcp/dhcpd.leases
+/var/lib/samba/wins.dat
+
